@@ -1,0 +1,91 @@
+1.安装组件开发脚手架
+npm install -g react-native-create-library
+
+2.创建组件工程
+react-native-create-library --package-identifier com.forisen.reactnative.base --platforms android,ios forisen-base
+
+3.创建测试工程
+mv forisen-base react-native-forisen-base
+cd react-native-forisen-base
+react-native init forisenbase --version 0.55.3
+mv forisenbase sample
+vi sample/package.jsion 添加自定义组件
+"dependencies": {
+    "react": "16.3.1",
+    "react-native": "0.55.3",
+    "react-native-forisen-base": "file:../"
+  }
+
+
+4.上传github
+ssh-keygen -t rsa -C "forisen@forisen.com"
+将文件生成在 github文件下
+cd github
+cat id_rsa.pub
+登录github-> Settings-> SSH and GPG Keys-> New SSH key添加
+测试是否连接成功
+ssh -T git@github.com
+
+git config --global github.user forisen      //github 上的用户名
+git config --global github.token 9b6c551b8a0736a01748f6709c291b3f3cc18750   //github Settings/Developer settings中生成的Personal access token
+
+创建github项目库 react-native-forisen-base
+git init    //初始化
+$ touch README
+$ git add README   //更新README文件
+$ git commit -m 'first commit'//提交更新，并注释信息“first commit”
+$ git remote add origin git@github.com:forisen/react-native-forisen-base.git   //连接远程github项目
+$ git push -u origin master   //将本地项目更新到github项目上去
+
+可能的错误：
+1).在执行
+$ git remote addorigin git@github.com:defnngj/hello-world.git
+错误提示：fatal: remote origin already exists.
+解决办法：
+$ git remote rm origin
+然后在执行：$ git remote add origin git@github.com:defnngj/hello-world.git 就不会报错误了
+
+2). 在执行
+$ git push origin master
+错误提示：error:failed to push som refs to.......
+解决办法：
+$ git pull origin master // 先把远程服务器github上面的文件拉下来，再push 上去。
+
+
+5.上传npm
+在npm 网站上注册用户
+
+查看当前使用的registry
+npm config get registry
+
+# 全局切换
+$ npm config set registry http://registry.npmjs.org/
+
+npm adduser //注册用户
+npm login //已有用户登录
+https://npmjs.com/~forisen    //查看是否注册成功以及所有库
+npm whoami  //查看本地登录用户
+
+cd react-native-forisen-base
+首次发布
+npm publish
+
+更新发布
+npm version <update_type>
+npm publish
+
+update_type取值有patch minor major
+patch	修复bug、微小改动时	从版本号第3位开始增量变动	1.0.0 -> 1.0.1
+minor	上线新功能，并且对当前版本已有功能模块不影响时	从版本号第2位开始增量变动	1.0.3 -> 1.1.3
+major	上线多个新功能模块，并且对当前版本已有功能会有影响时	从版本号第1位开始增量变动	1.0.3 -> 2.0.0
+注意
+
+如果首次发布版本号不是1.0.0的话，那么用$ npm version <update_type>
+来更新会报错，因为你没有按照它约定的版本规则来，这个时候，你可以手动修改package.json中的version字段为符合约定规则的版本号，然后直接执行$ npm publish就可以，然后下次再增量更新的时候，就可以直接使用$ npm version <update_type>的方式来自动更新版本号了
+
+
+6.项目引用自定义组件
+npm install --save react-native-forisen-base
+
+7.撤销npm发布
+npm unpublish react-native-forisen-base --force

@@ -1,0 +1,18 @@
+
+{
+  "name": "react-native-forisen-base",
+  "version": "1.0.0",
+  "description": "惠森科技React-Native基础类库",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native"
+  ],
+  "author": "惠森科技",
+  "license": "",
+  "peerDependencies": {
+    "react-native": "^0.41.2"
+  }
+}
